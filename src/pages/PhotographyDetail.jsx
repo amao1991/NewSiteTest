@@ -1,104 +1,136 @@
-import { Image, ExternalLink, Youtube, Instagram, Award } from 'lucide-react';
+import { Image, ExternalLink, Youtube, Instagram, Aperture, Camera } from 'lucide-react';
 
 export default function PhotographyDetail() {
   const experience = [
+    { event: "HITCON CMT 2024", role: "攝影組" },
+    { event: "HITCON CTF 2024", role: "攝影組" }
+  ];
+
+  const channels = [
     {
-      event: "HITCON CMT 2024",
-      role: "攝影組"
+      href: "https://youtube.com/@elmoisfree?si=LVwtJRf4amkyAUUs",
+      icon: Youtube,
+      iconColor: "text-red-500",
+      title: "YouTube 頻道",
+      desc: "觀看我的影片創作",
     },
     {
-      event: "HITCON CTF 2024",
-      role: "攝影組"
-    }
+      href: "https://www.instagram.com/elmootw/",
+      icon: Instagram,
+      iconColor: "text-pink-400",
+      title: "Instagram",
+      desc: "追蹤我的日常攝影",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 py-8 px-4 md:py-12">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-amber-700 mb-12">攝影作品集</h1>
+    <div className="relative min-h-screen bg-gallery-bg text-gallery-cream">
+      {/* 背景暖色暈染 */}
+      <div className="pointer-events-none fixed inset-0 warm-vignette" />
+      <img
+        src="/images/profile-photography.jpg"
+        alt=""
+        className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-[0.06]"
+      />
 
-        <section className="mb-12">
-          <div className="flex items-center mb-8">
-            <Image className="text-amber-600 mr-3" size={32} />
-            <h2 className="text-xl md:text-2xl font-bold text-amber-700">攝影作品</h2>
+      <div className="relative z-10 mx-auto max-w-5xl px-5 py-16 md:py-24">
+        {/* Hero */}
+        <header className="mb-20 animate-fadeUp">
+          <div className="mb-6 flex items-center gap-3 text-gallery-gold">
+            <span className="h-px w-12 bg-gallery-gold/50" />
+            <Aperture size={18} className="animate-floatSlow" />
+            <span className="font-mono text-xs tracking-[0.3em]">./portfolio</span>
           </div>
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg p-8 shadow-sm text-center border-l-4 border-amber-600 hover:shadow-md transition-shadow">
-              <p className="text-amber-900 mb-6 text-lg">探索我的攝影作品集，欣賞不同風格的創意攝影作品。</p>
-              <a
-                href="https://filedn.com/loSu3MwhU1Vpp461I9eR4vz/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-800 transition-colors"
-              >
-                查看作品集 <ExternalLink size={20} className="ml-2" />
-              </a>
-            </div>
+          <h1 className="font-mono text-5xl font-semibold leading-tight text-gallery-cream md:text-7xl">
+            捕捉光的
+            <span className="text-gallery-gold"> 瞬間</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-gallery-dim md:text-lg">
+            在資安工作之外，我用鏡頭記錄世界 —— 人像的情緒、風景的呼吸、活動現場稍縱即逝的光影。
+          </p>
+        </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <a
-                href="https://youtube.com/@elmoisfree?si=LVwtJRf4amkyAUUs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group"
-              >
-                <div className="bg-white rounded-lg overflow-hidden shadow-sm border-l-4 border-amber-600 hover:shadow-md transition-shadow h-full flex flex-col">
-                  <div className="h-32 bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center group-hover:from-amber-50 group-hover:to-amber-100 transition-colors">
-                    <Youtube size={48} className="text-red-600" />
-                  </div>
-                  <div className="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-amber-900 mb-1">YouTube 頻道</h3>
-                      <p className="text-amber-800">觀看我的影片創作</p>
-                    </div>
-                    <div className="inline-flex items-center text-amber-700 group-hover:text-amber-900 font-semibold text-sm mt-3">
-                      查看更多 <ExternalLink size={14} className="ml-1" />
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="https://www.instagram.com/elmootw/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group"
-              >
-                <div className="bg-white rounded-lg overflow-hidden shadow-sm border-l-4 border-amber-600 hover:shadow-md transition-shadow h-full flex flex-col">
-                  <div className="h-32 bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center group-hover:from-amber-50 group-hover:to-amber-100 transition-colors">
-                    <Instagram size={48} className="text-pink-600" />
-                  </div>
-                  <div className="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-amber-900 mb-1">Instagram</h3>
-                      <p className="text-amber-800">追蹤我的日常攝影</p>
-                    </div>
-                    <div className="inline-flex items-center text-amber-700 group-hover:text-amber-900 font-semibold text-sm mt-3">
-                      查看更多 <ExternalLink size={14} className="ml-1" />
-                    </div>
-                  </div>
-                </div>
-              </a>
+        {/* 主要作品集 CTA */}
+        <section className="mb-20">
+          <a
+            href="https://filedn.com/loSu3MwhU1Vpp461I9eR4vz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative block overflow-hidden rounded-2xl border border-gallery-line"
+          >
+            <img
+              src="/images/profile-photography.jpg"
+              alt="作品集"
+              className="h-72 w-full object-cover transition-transform duration-700 group-hover:scale-105 md:h-96"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-gallery-bg via-gallery-bg/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-8 md:p-10">
+              <p className="font-mono text-xs tracking-[0.3em] text-gallery-gold">the full collection</p>
+              <h2 className="mt-1 font-mono text-2xl font-semibold text-gallery-cream md:text-4xl">
+                完整攝影作品集
+              </h2>
+              <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-gallery-gold/60 bg-gallery-bg/40 px-5 py-2.5 text-sm font-medium text-gallery-cream backdrop-blur-sm transition-all group-hover:border-gallery-gold group-hover:bg-gallery-gold group-hover:text-gallery-bg">
+                進入作品集 <ExternalLink size={16} />
+              </span>
             </div>
+          </a>
+        </section>
+
+        {/* 社群頻道 */}
+        <section className="mb-20">
+          <div className="mb-8 flex items-center gap-3">
+            <Image className="text-gallery-gold" size={20} />
+            <h2 className="font-mono text-2xl font-semibold text-gallery-cream">影像頻道</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {channels.map((c) => (
+              <a
+                key={c.title}
+                href={c.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-5 rounded-xl border border-gallery-line bg-gallery-panel/60 p-6 backdrop-blur-sm transition-all hover:border-gallery-gold/50 hover:bg-gallery-panel"
+              >
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gallery-bg/60">
+                  <c.icon size={28} className={c.iconColor} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-mono text-xl font-semibold text-gallery-cream">{c.title}</h3>
+                  <p className="text-sm text-gallery-dim">{c.desc}</p>
+                </div>
+                <ExternalLink size={18} className="text-gallery-dim transition-all group-hover:translate-x-1 group-hover:text-gallery-gold" />
+              </a>
+            ))}
           </div>
         </section>
 
+        {/* 攝影經驗 */}
         <section>
-          <div className="flex items-center mb-8">
-            <Award className="text-amber-600 mr-3" size={32} />
-            <h2 className="text-xl md:text-2xl font-bold text-amber-700">攝影經驗</h2>
+          <div className="mb-8 flex items-center gap-3">
+            <Camera className="text-gallery-gold" size={20} />
+            <h2 className="font-mono text-2xl font-semibold text-gallery-cream">現場經驗</h2>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm border-l-4 border-amber-600">
-            <ul className="space-y-3">
-              {experience.map((exp, idx) => (
-                <li key={idx} className="text-amber-900 flex items-start">
-                  <span className="text-amber-600 mr-3 flex-shrink-0 mt-1">•</span>
-                  <span className="text-base">{exp.event} {exp.role}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="space-y-4">
+            {experience.map((exp, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-5 rounded-xl border border-gallery-line bg-gallery-panel/40 p-6 transition-all hover:border-gallery-gold/40"
+              >
+                <span className="font-mono text-3xl text-gallery-gold/50">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h3 className="font-mono text-xl font-semibold text-gallery-cream">{exp.event}</h3>
+                  <p className="text-sm text-gallery-dim">{exp.role}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
+
+        <footer className="mt-20 border-t border-gallery-line pt-8 text-center font-mono text-xs text-gallery-dim">
+          // captured with light &amp; patience
+        </footer>
       </div>
     </div>
   );

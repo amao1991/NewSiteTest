@@ -1,8 +1,8 @@
-import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink } from 'lucide-react';
+import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink, Terminal } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function CyberSecurityDetail() {
-  const [expandedJob, setExpandedJob] = useState(null);
+  const [expandedJob, setExpandedJob] = useState(0);
   const [activeSection, setActiveSection] = useState(null);
 
   // 計算時長（支持開始日期或完整日期範圍）
@@ -10,9 +10,9 @@ export default function CyberSecurityDetail() {
     const parts = periodStr.split(' - ');
     const startDateStr = parts[0];
     const endDateStr = parts[1];
-    
+
     const [startYear, startMonth] = startDateStr.split('/').map(Number);
-    
+
     let endYear, endMonth;
     if (endDateStr === '至今') {
       const now = new Date();
@@ -21,15 +21,15 @@ export default function CyberSecurityDetail() {
     } else {
       [endYear, endMonth] = endDateStr.split('/').map(Number);
     }
-    
+
     let years = endYear - startYear;
     let months = endMonth - startMonth;
-    
+
     if (months < 0) {
       years--;
       months += 12;
     }
-    
+
     if (years > 0 && months > 0) {
       return `${years} 年 ${months} 個月`;
     } else if (years > 0) {
@@ -101,12 +101,12 @@ export default function CyberSecurityDetail() {
   ];
 
   const certifications = [
-    { name: "CPENT", color: "from-gray-300 to-gray-400", image: "/images/certifications/CPENT.png", expiry: "2027/03/17" },
-    { name: "LPT", color: "from-gray-300 to-gray-400", image: "/images/certifications/LPT.png", expiry: "2027/03/17" },
-    { name: "ISO 27001:2022 LA", color: "from-gray-300 to-gray-400", image: "/images/certifications/ISO27001.png", expiry: "無期限" },
-    { name: "CHFI", color: "from-gray-300 to-gray-400", image: "/images/certifications/CHFI.png", expiry: "2027/10/01" },
-    { name: "ECSA", color: "from-gray-300 to-gray-400", image: "/images/certifications/ECSA.png", expiry: "2026/01/01" },
-    { name: "CEH", color: "from-gray-300 to-gray-400", image: "/images/certifications/CEH.png", expiry: "2027/06/30" }
+    { name: "CPENT", image: "/images/certifications/CPENT.png", expiry: "2027/03/17" },
+    { name: "LPT", image: "/images/certifications/LPT.png", expiry: "2027/03/17" },
+    { name: "ISO 27001:2022 LA", image: "/images/certifications/ISO27001.png", expiry: "無期限" },
+    { name: "CHFI", image: "/images/certifications/CHFI.png", expiry: "2027/10/01" },
+    { name: "ECSA", image: "/images/certifications/ECSA.png", expiry: "2026/01/01" },
+    { name: "CEH", image: "/images/certifications/CEH.png", expiry: "2027/06/30" }
   ];
 
   const speeches = [
@@ -125,10 +125,10 @@ export default function CyberSecurityDetail() {
   ];
 
   const sections = [
-    { id: 'work-experience', label: '工作經歷', icon: Briefcase },
-    { id: 'speeches', label: '演講經驗', icon: Mic },
-    { id: 'certifications', label: '專業證照', icon: Award },
-    { id: 'education', label: '學歷', icon: BookOpen }
+    { id: 'work-experience', label: 'work', icon: Briefcase },
+    { id: 'speeches', label: 'talks', icon: Mic },
+    { id: 'certifications', label: 'certs', icon: Award },
+    { id: 'education', label: 'edu', icon: BookOpen }
   ];
 
   useEffect(() => {
@@ -136,61 +136,122 @@ export default function CyberSecurityDetail() {
       for (const section of sections) {
         const element = document.getElementById(section.id);
         if (element) {
-          const h2 = element.querySelector('h2');
-          if (h2) {
-            const rect = h2.getBoundingClientRect();
-            // 檢查 h2 是否在視窗上方 200px 以內
-            if (rect.top <= 200 && rect.bottom > 0) {
-              setActiveSection(section.id);
-              break;
-            }
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 220 && rect.bottom > 220) {
+            setActiveSection(section.id);
+            break;
           }
         }
       }
     };
-
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections]);
+  }, []);
+
+  const SectionTitle = ({ icon: Icon, path, count }) => (
+    <div className="mb-8 flex items-center gap-3 border-b border-terminal-line pb-3">
+      <Icon className="text-terminal-green" size={22} />
+      <h2 className="font-mono text-lg font-bold text-terminal-cyan md:text-xl">
+        <span className="text-terminal-dim">~/</span>
+        {path}
+      </h2>
+      {count != null && (
+        <span className="ml-auto font-mono text-xs text-terminal-dim">[{count}]</span>
+      )}
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 py-8 px-4 md:py-12">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-sky-700 mb-12">資安履歷</h1>
+    <div className="relative min-h-screen bg-terminal-bg text-white">
+      {/* 背景質感 */}
+      <div className="pointer-events-none fixed inset-0 grid-bg opacity-40" />
+      <div className="pointer-events-none fixed inset-0 scanlines opacity-50" />
+      <div
+        className="pointer-events-none fixed left-1/2 top-0 h-[420px] w-[820px] -translate-x-1/2 opacity-40"
+        style={{ background: 'radial-gradient(ellipse, rgba(63,243,165,0.18), transparent 70%)' }}
+      />
 
-        <section className="mb-12 scroll-mt-20" id="work-experience">
-          <div className="flex items-center mb-8">
-            <Briefcase className="text-sky-600 mr-3" size={32} />
-            <h2 className="text-xl md:text-2xl font-bold text-sky-700">工作經歷</h2>
+      {/* 側邊區段導覽 */}
+      <nav className="fixed left-6 top-1/2 z-30 hidden -translate-y-1/2 flex-col gap-3 xl:flex">
+        {sections.map((s) => (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            className={`flex items-center gap-2 font-mono text-xs transition-colors ${
+              activeSection === s.id ? 'text-terminal-green glow-green' : 'text-terminal-dim hover:text-terminal-cyan'
+            }`}
+          >
+            <span className={`h-px transition-all ${activeSection === s.id ? 'w-6 bg-terminal-green' : 'w-3 bg-terminal-dim'}`} />
+            {s.label}
+          </a>
+        ))}
+      </nav>
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 py-14 md:py-20">
+        {/* Hero */}
+        <header className="mb-16 animate-fadeUp">
+          <div className="inline-flex items-center gap-2 rounded-md border border-terminal-line bg-terminal-panel px-3 py-1 font-mono text-xs text-terminal-green">
+            <Terminal size={13} /> secure shell established
           </div>
-          <div className="space-y-6">
+          <h1 className="mt-5 font-mono text-3xl font-bold text-white md:text-5xl">
+            <span className="text-terminal-green glow-green">$</span> whoami
+          </h1>
+          <p className="mt-4 max-w-2xl font-mono text-sm leading-relaxed text-terminal-dim md:text-base">
+            <span className="text-terminal-cyan">Elmo HSIAO</span> — 資訊安全顧問。8+ 年滲透測試與資安顧問經驗，
+            專精應用安全、資安事件應變與原始碼檢測，現領導資安專業團隊。
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2 font-mono text-xs">
+            {['Penetration Testing', 'Incident Response', 'AppSec', 'SAST', 'Team Lead'].map((t) => (
+              <span key={t} className="rounded border border-terminal-line bg-terminal-panel px-2.5 py-1 text-terminal-cyan">
+                {t}
+              </span>
+            ))}
+          </div>
+        </header>
+
+        {/* 工作經歷 */}
+        <section className="mb-16 scroll-mt-24" id="work-experience">
+          <SectionTitle icon={Briefcase} path="work-experience" count={workExperience.length} />
+          <div className="space-y-4">
             {workExperience.map((job, idx) => (
-              <div key={idx} className="bg-white rounded-lg shadow-sm border-l-4 border-sky-600 hover:shadow-md hover:shadow-sky-400/20 transition-all">
+              <div
+                key={idx}
+                className={`overflow-hidden rounded-lg border bg-terminal-panel transition-all ${
+                  expandedJob === idx
+                    ? 'border-terminal-green/50 shadow-[0_0_24px_rgba(63,243,165,0.12)]'
+                    : 'border-terminal-line hover:border-terminal-cyan/40'
+                }`}
+              >
                 <button
                   onClick={() => setExpandedJob(expandedJob === idx ? null : idx)}
-                  className="w-full p-6 text-left flex flex-col md:flex-row md:justify-between md:items-start hover:bg-sky-50 transition-colors"
+                  className="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"
                 >
                   <div className="flex-1">
-                    <h3 className="text-lg md:text-xl font-bold text-sky-900">{job.position}</h3>
-                    <p className="text-sky-700 font-semibold">{job.company}</p>
+                    <div className="flex items-center gap-2 font-mono text-xs text-terminal-green">
+                      <span className="text-terminal-dim">{idx === 0 ? '◉' : '○'}</span>
+                      {idx === 0 ? 'current' : `role_${workExperience.length - idx}`}
+                    </div>
+                    <h3 className="mt-1.5 text-base font-bold text-white md:text-lg">{job.position}</h3>
+                    <p className="font-mono text-sm text-terminal-cyan">{job.company}</p>
                   </div>
-                  <div className="text-right mt-2 md:mt-0 flex items-center gap-3">
-                    <div>
-                      <p className="text-sky-700 text-sm font-semibold">{job.period}</p>
-                      <p className="text-sky-600 text-xs">{calculateDuration(job.period)}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <p className="font-mono text-xs text-white/80">{job.period}</p>
+                      <p className="font-mono text-[11px] text-terminal-dim">{calculateDuration(job.period)}</p>
                     </div>
                     <ChevronDown
-                      size={20}
-                      className={`text-sky-600 transition-transform flex-shrink-0 ${expandedJob === idx ? 'rotate-180' : ''}`}
+                      size={18}
+                      className={`flex-shrink-0 text-terminal-green transition-transform ${expandedJob === idx ? 'rotate-180' : ''}`}
                     />
                   </div>
                 </button>
                 {expandedJob === idx && (
-                  <div className="px-6 pb-6 border-t border-sky-200">
-                    <ul className="mt-4 space-y-2">
-                      {job.description.map((desc, descIdx) => (
-                        <li key={descIdx} className="text-sky-900 flex">
-                          <span className="text-sky-600 mr-3 flex-shrink-0">•</span>
+                  <div className="animate-fadeUp border-t border-terminal-line px-5 pb-6 pt-4 md:px-6">
+                    <ul className="space-y-2.5">
+                      {job.description.map((desc, di) => (
+                        <li key={di} className="flex gap-3 text-sm leading-relaxed text-white/75">
+                          <span className="mt-0.5 font-mono text-terminal-green">&gt;</span>
                           <span>{desc}</span>
                         </li>
                       ))}
@@ -202,25 +263,26 @@ export default function CyberSecurityDetail() {
           </div>
         </section>
 
-        <section className="mb-12 scroll-mt-20" id="speeches">
-          <div className="flex items-center mb-8">
-            <Mic className="text-sky-600 mr-3" size={32} />
-            <h2 className="text-xl md:text-2xl font-bold text-sky-700">演講經驗</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 演講經驗 */}
+        <section className="mb-16 scroll-mt-24" id="speeches">
+          <SectionTitle icon={Mic} path="talks" count={speeches.length} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {speeches.map((speech, idx) => (
-              <div key={idx} className="bg-white rounded-lg p-6 shadow-sm border-l-4 border-sky-600 hover:shadow-md hover:shadow-sky-400/20 transition-all flex flex-col">
-                <h3 className="text-lg font-bold text-sky-900 mb-2 line-clamp-2">{speech.title}</h3>
-                <p className="text-sky-700 font-semibold mb-1 text-sm line-clamp-2">{speech.event}</p>
-                <p className="text-sky-600 text-sm mb-3">{speech.date}</p>
+              <div
+                key={idx}
+                className="group flex flex-col rounded-lg border border-terminal-line bg-terminal-panel p-5 transition-all hover:border-terminal-green/50 hover:shadow-[0_0_20px_rgba(63,243,165,0.10)]"
+              >
+                <div className="mb-2 font-mono text-xs text-terminal-dim">{speech.date}</div>
+                <h3 className="font-bold leading-snug text-white">{speech.title}</h3>
+                <p className="mt-1.5 font-mono text-xs leading-relaxed text-terminal-cyan/80">{speech.event}</p>
                 {speech.link && (
                   <a
                     href={speech.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center text-sky-700 hover:text-sky-900 font-semibold text-sm"
+                    className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-terminal-green transition-transform group-hover:translate-x-1"
                   >
-                    查看更多 <ExternalLink size={14} className="ml-1" />
+                    cat slides <ExternalLink size={12} />
                   </a>
                 )}
               </div>
@@ -228,37 +290,51 @@ export default function CyberSecurityDetail() {
           </div>
         </section>
 
-        <section className="mb-12 scroll-mt-20" id="certifications">
-          <div className="flex items-center mb-8">
-            <Award className="text-sky-600 mr-3" size={32} />
-            <h2 className="text-xl md:text-2xl font-bold text-sky-700">專業證照</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* 專業證照 */}
+        <section className="mb-16 scroll-mt-24" id="certifications">
+          <SectionTitle icon={Award} path="certifications" count={certifications.length} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {certifications.map((cert, idx) => (
-              <div key={idx} className="bg-white rounded-lg p-4 shadow-sm border-t-4 border-sky-600 hover:shadow-md hover:shadow-sky-400/20 transition-all transform hover:scale-105">
-                <img src={cert.image} alt={cert.name} className="w-full h-40 object-cover rounded-md mb-3" />
-                <p className="text-sky-900 font-bold text-center mb-2">{cert.name}</p>
-                <p className="text-sky-600 text-xs text-center">有效期限：{cert.expiry}</p>
+              <div
+                key={idx}
+                className="group overflow-hidden rounded-lg border border-terminal-line bg-terminal-panel transition-all hover:border-terminal-cyan/50 hover:shadow-[0_0_20px_rgba(56,225,255,0.12)]"
+              >
+                <div className="relative h-40 overflow-hidden bg-black/30">
+                  <img
+                    src={cert.image}
+                    alt={cert.name}
+                    className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="border-t border-terminal-line p-4">
+                  <p className="text-center font-mono text-sm font-bold text-terminal-cyan">{cert.name}</p>
+                  <p className="mt-1 text-center font-mono text-[11px] text-terminal-dim">exp: {cert.expiry}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="scroll-mt-20" id="education">
-          <div className="flex items-center mb-8">
-            <BookOpen className="text-sky-600 mr-3" size={32} />
-            <h2 className="text-xl md:text-2xl font-bold text-sky-700">學歷</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* 學歷 */}
+        <section className="scroll-mt-24" id="education">
+          <SectionTitle icon={BookOpen} path="education" count={education.length} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {education.map((edu, idx) => (
-              <div key={idx} className="bg-white rounded-lg p-6 shadow-sm border-t-4 border-sky-600 hover:shadow-md hover:shadow-sky-400/20 transition-all">
-                <h3 className="text-xl font-bold text-sky-900 mb-2">{edu.school}</h3>
-                <p className="text-sky-700 font-semibold mb-2">{edu.degree}</p>
-                <p className="text-sky-600">{edu.period}</p>
+              <div
+                key={idx}
+                className="rounded-lg border border-terminal-line bg-terminal-panel p-6 transition-all hover:border-terminal-green/50"
+              >
+                <h3 className="text-lg font-bold text-white">{edu.school}</h3>
+                <p className="mt-1 font-mono text-sm text-terminal-cyan">{edu.degree}</p>
+                <p className="mt-2 font-mono text-xs text-terminal-dim">{edu.period}</p>
               </div>
             ))}
           </div>
         </section>
+
+        <footer className="mt-16 border-t border-terminal-line pt-6 font-mono text-xs text-terminal-dim">
+          <span className="text-terminal-green">$</span> exit <span className="animate-blink">_</span>
+        </footer>
       </div>
     </div>
   );
