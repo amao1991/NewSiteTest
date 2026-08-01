@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Terminal, Camera, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { yearsOfExperience } from '../utils/experience';
 
 export default function Home() {
   const [hover, setHover] = useState(null);
@@ -43,7 +44,7 @@ export default function Home() {
               資訊安全顧問
             </h2>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-terminal-dim">
-              8+ 年滲透測試與資安顧問經驗，專精應用安全、事件應變，現領導資安專業團隊。
+              {yearsOfExperience()}+ 年滲透測試與資安顧問經驗，專精應用安全、事件應變，現領導資安專業團隊。
             </p>
             <span className="mt-5 inline-flex items-center gap-2 font-mono text-sm text-terminal-green transition-transform group-hover:translate-x-1">
               進入終端機 <ArrowRight size={16} />

@@ -1,5 +1,6 @@
 import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink, Terminal } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { yearsOfExperience } from '../utils/experience';
 
 export default function CyberSecurityDetail() {
   const [expandedJob, setExpandedJob] = useState(0);
@@ -198,7 +199,7 @@ export default function CyberSecurityDetail() {
             <span className="text-terminal-green glow-green">$</span> whoami
           </h1>
           <p className="mt-4 max-w-2xl font-mono text-sm leading-relaxed text-terminal-dim md:text-base">
-            <span className="text-terminal-cyan">Elmo HSIAO</span> — 資訊安全顧問。8+ 年滲透測試與資安顧問經驗，
+            <span className="text-terminal-cyan">Elmo HSIAO</span> — 資訊安全顧問。{yearsOfExperience()}+ 年滲透測試與資安顧問經驗，
             專精應用安全、資安事件應變與原始碼檢測，現領導資安專業團隊。
           </p>
           <div className="mt-6 flex flex-wrap gap-2 font-mono text-xs">
