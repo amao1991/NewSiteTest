@@ -1,4 +1,4 @@
-import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink, Terminal, ShieldAlert } from 'lucide-react';
+import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink, Terminal, ShieldAlert, Mail, Linkedin, Github } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { yearsOfExperience } from '../utils/experience';
 
@@ -137,12 +137,19 @@ export default function CyberSecurityDetail() {
     { title: "惡意程式分析與密碼學：你不可不知的資訊安全", event: "HITCON GIRLS 成功大學講座", date: "2016-04-28", link: "https://www.slideshare.net/slideshow/hitcon-girls-61507736/61507736" }
   ];
 
+  const contacts = [
+    { label: "Email", value: "fengjicamao@gmail.com", href: "mailto:fengjicamao@gmail.com", icon: Mail },
+    { label: "LinkedIn", value: "chao-an-hsiao", href: "https://www.linkedin.com/in/chao-an-hsiao-0a3698bb/", icon: Linkedin },
+    { label: "GitHub", value: "elmootw", href: "https://github.com/elmootw", icon: Github }
+  ];
+
   const sections = [
     { id: 'work-experience', label: 'work', icon: Briefcase },
     { id: 'cve', label: 'cve', icon: ShieldAlert },
     { id: 'speeches', label: 'talks', icon: Mic },
     { id: 'certifications', label: 'certs', icon: Award },
-    { id: 'education', label: 'edu', icon: BookOpen }
+    { id: 'education', label: 'edu', icon: BookOpen },
+    { id: 'contact', label: 'contact', icon: Mail }
   ];
 
   useEffect(() => {
@@ -374,8 +381,32 @@ export default function CyberSecurityDetail() {
           </div>
         </section>
 
-        <footer className="mt-16 border-t border-terminal-line pt-6 font-mono text-xs text-terminal-dim">
-          <span className="text-terminal-green">$</span> exit <span className="animate-blink">_</span>
+        {/* 聯絡方式 */}
+        <footer className="mt-16 scroll-mt-24 border-t border-terminal-line pt-8" id="contact">
+          <p className="mb-5 font-mono text-lg font-bold text-terminal-cyan">
+            <span className="text-terminal-dim">~/</span>contact
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {contacts.map((c, idx) => {
+              const isExternal = c.href.startsWith('http');
+              return (
+                <a
+                  key={idx}
+                  href={c.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="group inline-flex items-center gap-2.5 rounded-lg border border-terminal-line bg-terminal-panel px-4 py-2.5 transition-all hover:border-terminal-green/50 hover:shadow-[0_0_18px_rgba(63,243,165,0.12)]"
+                >
+                  <c.icon size={16} className="text-terminal-green" />
+                  <span className="font-mono text-xs text-terminal-dim">{c.label}</span>
+                  <span className="font-mono text-sm text-white/85 transition-colors group-hover:text-terminal-cyan">{c.value}</span>
+                </a>
+              );
+            })}
+          </div>
+          <p className="mt-10 font-mono text-xs text-terminal-dim">
+            <span className="text-terminal-green">$</span> exit <span className="animate-blink">_</span>
+          </p>
         </footer>
       </div>
     </div>
