@@ -1,4 +1,4 @@
-import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink, Terminal } from 'lucide-react';
+import { Briefcase, Award, Mic, BookOpen, ChevronDown, ExternalLink, Terminal, ShieldAlert } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { yearsOfExperience } from '../utils/experience';
 
@@ -101,6 +101,17 @@ export default function CyberSecurityDetail() {
     { school: "國立新竹教育大學", degree: "應用科學系 - 學士", period: "2009 - 2013" }
   ];
 
+  const cves = [
+    {
+      id: "CVE-2024-0552",
+      product: "Intumit SmartRobot",
+      type: "Remote Code Execution (CWE-74 Injection)",
+      severity: "Critical",
+      cvss: "9.8",
+      link: "https://nvd.nist.gov/vuln/detail/CVE-2024-0552"
+    }
+  ];
+
   const certifications = [
     { name: "CPENT", image: "/images/certifications/CPENT.png", expiry: "2027/03/17" },
     { name: "LPT", image: "/images/certifications/LPT.png", expiry: "2027/03/17" },
@@ -128,6 +139,7 @@ export default function CyberSecurityDetail() {
 
   const sections = [
     { id: 'work-experience', label: 'work', icon: Briefcase },
+    { id: 'cve', label: 'cve', icon: ShieldAlert },
     { id: 'speeches', label: 'talks', icon: Mic },
     { id: 'certifications', label: 'certs', icon: Award },
     { id: 'education', label: 'edu', icon: BookOpen }
@@ -261,6 +273,34 @@ export default function CyberSecurityDetail() {
                   </div>
                 )}
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CVE / 漏洞揭露 */}
+        <section className="mb-16 scroll-mt-24" id="cve">
+          <SectionTitle icon={ShieldAlert} path="cve-disclosures" count={cves.length} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {cves.map((cve, idx) => (
+              <a
+                key={idx}
+                href={cve.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col rounded-lg border border-terminal-line bg-terminal-panel p-5 transition-all hover:border-red-500/50 hover:shadow-[0_0_22px_rgba(239,68,68,0.14)]"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-mono text-base font-bold text-white">{cve.id}</span>
+                  <span className="flex-shrink-0 rounded border border-red-500/50 bg-red-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-red-400">
+                    {cve.severity} · {cve.cvss}
+                  </span>
+                </div>
+                <p className="mt-2 font-mono text-sm text-terminal-cyan">{cve.product}</p>
+                <p className="mt-1 text-sm text-white/70">{cve.type}</p>
+                <span className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-terminal-green transition-transform group-hover:translate-x-1">
+                  view advisory <ExternalLink size={12} />
+                </span>
+              </a>
             ))}
           </div>
         </section>
