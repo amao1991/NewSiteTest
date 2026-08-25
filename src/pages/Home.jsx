@@ -35,7 +35,7 @@ export default function Home() {
           <img
             src="/images/profile-cybersecurity.jpg"
             alt=""
-            className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-25"
+            className="absolute inset-0 h-full w-full object-cover object-top opacity-15 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-25"
           />
           <div className="relative z-10 w-full p-8 pb-12 md:p-12 md:pb-16">
             <Terminal className="mb-4 text-terminal-green glow-green" size={34} />
