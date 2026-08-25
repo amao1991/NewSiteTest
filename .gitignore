@@ -1,1 +1,5 @@
 .DS_Store
+
+# 依賴與建置產物（CI 會自行 npm install 與 npm run build）
+node_modules/
+dist/
