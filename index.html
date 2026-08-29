@@ -15,5 +15,13 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Cloudflare Web Analytics（無 cookie、不追蹤個人）。
+         spa: true = 讓 beacon 掛上 History API，React Router 換頁也會各記一筆 pageview。 -->
+    <script
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "4d7f34bb3d034496a19fa4ad771ccf65", "spa": true}'
+    ></script>
   </body>
 </html>
